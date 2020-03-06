@@ -14,9 +14,6 @@ public class Main {
         Arrays.sort(pack);
         Arrays.sort(one);
         
-        if(n<=6) 
-        	System.out.println(Math.min(pack[0], one[0]*n));
-        else
-        	System.out.println(Math.min(Math.min(pack[0]*(n/6) + one[0]*(n%6), one[0]*n),pack[0]*(n/6+1)));        
+        System.out.println(Math.min(Math.min(pack[0]*(n/6) + one[0]*(n%6), one[0]*n),pack[0]*(n/6+1)));        
     }
 }
