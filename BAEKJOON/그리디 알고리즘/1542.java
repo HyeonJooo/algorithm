@@ -1,13 +1,13 @@
-//¹éÁØ ¾Ë°í¸®Áò 1543 : ¹®¼­ °Ë»ö
+//ë°±ì¤€ ì•Œê³ ë¦¬ì¦˜ 1543 : ë¬¸ì„œ ê²€ìƒ‰
 
 import java.io.*;
 public class Main {
     public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-        String st = br.readLine(); //¹®¼­
+        String st = br.readLine(); //ë¬¸ì„œ
         String[] s = st.split("");
-        String ans = br.readLine(); //°Ë»öÇÏ°í ½ÍÀº ´Ü¾î 
-        int count = 0; //È½¼ö
+        String ans = br.readLine(); //ê²€ìƒ‰í•˜ê³  ì‹¶ì€ ë‹¨ì–´ 
+        int count = 0; //íšŸìˆ˜
         
         for(int i = 0; i<=s.length-ans.length(); i++) {
         	String a = "";
@@ -18,7 +18,7 @@ public class Main {
         	
         	if(ans.equals(a)) {
         		count++;
-        		i = i +ans.length() -1; //Áßº¹µÇ¸é ¾ÈµÇ±â ¶§¹®
+        		i = i +ans.length() -1; //ì¤‘ë³µë˜ë©´ ì•ˆë˜ê¸° ë•Œë¬¸
         	}
         }
         System.out.println(count);
