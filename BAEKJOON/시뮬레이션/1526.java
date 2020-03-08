@@ -4,34 +4,31 @@ import java.util.*;
 public class Main {
     public static void main(String[] args) throws IOException {
         Scanner sc = new Scanner(System.in);
-        int insert = sc.nextInt();
-        int value = 0;
-        Queue<Integer> q = new LinkedList<Integer>();
-		if(insert >= 4) {
-			q.add(4);
-			value = 4;
-		}
-		if(insert >= 7) {
-			q.add(7);
-			value = 7;
+        int n = sc.nextInt();
+        Queue<Integer> queue = new LinkedList<Integer>();
+		queue.add(4);
+		int num = 4;
+		
+		if(n >= 7) {
+			queue.add(7);
+			num = 7;
 		}
 		
-		while(!q.isEmpty()) {
-			int now = q.poll();
-			now *= 10;
-			now += 4;
+		while(!queue.isEmpty()) {
+			int tmp = queue.poll();
+			tmp *= 10;
+			tmp += 4;
 			
-			if(now <= insert) {
-				value = now;
-				q.add(now);
+			if(tmp <= n) {
+				num = tmp;
+				queue.add(tmp);
 			}
-			now += 3;
-			if(now <= insert) {
-				value = now;
-				q.add(now);
+			tmp += 3;
+			if(tmp <= n) {
+				num = tmp;
+				queue.add(tmp);
 			}
 		}
-		System.out.println(value);
-
+		System.out.println(num);
     }
 }
