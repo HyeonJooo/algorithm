@@ -1,6 +1,5 @@
-//백준 알고리즘 1065 : 한수
 import java.util.*;
-public class Main {
+public class Main {	
 	public static void main(String[] args) {
 		Scanner sc = new Scanner(System.in);	
 		int n = sc.nextInt();
@@ -22,14 +21,12 @@ public class Main {
 					break;
 			}
 		}
-		
 		else if(i<100)
 			count++;
 		
 		else
 			break;
 		}
-		
 		System.out.println(count);
 	}
 }
