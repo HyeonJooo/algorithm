@@ -16,7 +16,6 @@ public class Main {
     			System.out.print(s[i%s.length]);
     		}
     	}
-    	
     	else {
     		for(int i = 0 ; i<n; i++) {
     			System.out.print(n);
