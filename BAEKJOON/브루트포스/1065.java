@@ -1,3 +1,4 @@
+//백준 알고리즘 1065번 : 한수
 import java.util.*;
 public class Main {	
 	public static void main(String[] args) {
