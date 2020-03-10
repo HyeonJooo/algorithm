@@ -1,4 +1,4 @@
-//
+//2019 SCCC 벚꽃맞이 컨테스트
 //백준 알고리즘 17127번 : 벚꽃이 정보섬에 피어난 이유
 import java.io.*;
 import java.util.*;
