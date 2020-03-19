@@ -16,15 +16,15 @@ public class Main {
     		for(int j = 1; j<=n; j++) {
     			arr[i][j] = sc.nextInt();
     			if(arr[i][j]==1 && arr[j][i] == 0)
-    				unionParent(parent, i, j);
+    				union(i, j);
     		}
     	}
     	int[] city = new int[m];
     	for(int i = 0 ; i<m; i++) {
     		city[i] = sc.nextInt();
     	}
-    	for(int i = 0 ; i<m-1; i++) {
-    		if(findParent(parent, city[i], city[i+1]) == 0) {
+     	for(int i = 0 ; i<m-1; i++) {
+    		if(find(city[i]) != find(city[i+1])) {
     			System.out.println("NO");
     			System.exit(0);
     		}
@@ -32,22 +32,17 @@ public class Main {
     	System.out.println("YES");
 	}
     
-    public static int getParent(int parent[], int x) {
-    	if(parent[x] == x) return x;
-    	return parent[x] = getParent(parent, parent[x]);
+    public static void union(int a, int b) {
+    	a = find(a);
+    	b = find(b);
+    	if(a != b)
+    		parent[a] = b;
     }
     
-    public static void unionParent(int parent[], int a, int b) {
-    	a = getParent(parent, a);
-    	b = getParent(parent, b);
-    	if(a < b) parent[b] = a;
-    	else parent[a] = b;
-    }
-    
-    public static int findParent(int parent[], int a, int b) {
-    	a = getParent(parent, a);
-    	b = getParent(parent, b);
-    	if(a == b) return 1;
-    	else return 0;
+    public static int find(int a) {
+    	if(parent[a] == a)
+    		return a;
+    	else
+    		return parent[a] = find(parent[a]);
     }
 }
