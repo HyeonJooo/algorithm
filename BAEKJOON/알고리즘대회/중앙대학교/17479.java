@@ -1,4 +1,4 @@
-//shake! 2019
+//2019 중앙대학교 프로그래밍 경진대회
 //백준 알고리즘 17479번 : 정식당
 import java.io.*;
 import java.util.*;
