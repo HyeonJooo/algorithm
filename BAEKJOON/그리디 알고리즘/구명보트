@@ -1,0 +1,25 @@
+//프로그래머스
+import java.io.*;
+import java.util.*;
+class Solution {
+    public int solution(int[] people, int limit) {
+        int answer = 0;
+        Arrays.sort(people);
+        int j = 0;
+        if(people.length==1)
+        	answer = 1;
+        else {
+            for(int i = people.length-1; j<=i; i--){
+            	int sum = people[i] + people[j];
+            	if(sum > limit) {
+            		answer++;
+            	}
+            	else {
+            		answer++;
+            		j++;
+            	}
+            }
+        }
+        return answer;
+    }
+}
