@@ -1,0 +1,82 @@
+import java.io.*;
+import java.util.*;
+
+public class Main {
+	static int[][] arr;
+    public static void main(String[] args) throws IOException {
+    	Scanner sc = new Scanner(System.in);
+    	int[] arr = {1,2,3,4,5,6,7,8,9,0};
+    	String hand = "right";
+    	System.out.println(solution(arr,hand));
+    	
+    }
+    
+    public static String solution(int[] numbers, String hand) {
+        String answer = "";
+        int left = -1, right = -2;
+        arr = new int[4][3];
+        int k = 1;
+        for(int i = 0; i<3; i++) {
+        	for(int j = 0; j<3; j++) {
+        		arr[i][j] = k;
+        		k++;
+        	}
+        }
+        arr[3][1] = 0;
+        arr[3][0] = -1;
+        arr[3][2] = -2;
+
+        for(int i = 0 ; i<numbers.length; i++) {
+        	int num = numbers[i];
+        	if(num == 1 || num == 4 || num == 7) {
+        		answer += "L";
+        		left = num;
+        	}
+
+        	else if(num == 3 || num == 6 || num == 9) {
+        		answer += "R";
+        		right = num;
+        	}
+
+        	else {
+        		if(distance(num,left) > distance(num,right)) {
+        			answer += "R";
+        			right = num;
+        		}
+        		else if(distance(num,left) < distance(num,right)) {
+        			answer += "L";
+        			left = num;
+        		}
+        		else {
+        			if(hand.equals("left")) {
+            			answer += "L";
+            			left = num;        				
+        			}
+        			else {
+            			answer += "R";
+            			right = num;        				
+        			}
+        		}
+        	}
+        }
+        
+        return answer;
+    }
+    public static int distance(int num, int hand) {
+    	int num1 = 0, num2 = 0;
+    	int hand1 = 0, hand2 = 0;
+    	for(int i = 0; i<4; i++) {
+    		for(int j = 0; j<3; j++) {
+    			if(num==arr[i][j]) {
+    				num1 = i;
+    				num2 = j;
+    			}
+    			if(hand==arr[i][j]) {
+    				hand1 = i;
+    				hand2 = j;
+    			}
+    		}
+    	}
+    	return Math.abs((num1-hand1)) + Math.abs((num2-hand2));
+    }
+}
