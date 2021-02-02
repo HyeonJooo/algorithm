@@ -1,0 +1,96 @@
+import java.util.*;
+
+public class Main {
+
+    static HashMap<String, Integer> map = new HashMap<String, Integer>();
+
+    public static void main(String[] args) {
+        String[] a = {"XYZ", "XWY", "WXA"};
+        int[] b = {2,3,4};
+        String[] ans = solution(a,b);
+
+        for(int i = 0; i<ans.length; i++) {
+            System.out.println(ans[i]);
+        }
+    }
+
+    public static String[] solution(String[] orders, int[] course) {
+        String[] answer = {};
+        List<String> list = new ArrayList<String>();
+
+        //1.orders[i]를 알파벳 순(오름차순)으로 변경
+        //2.orders[i]를 조합으로 분리 후(course[i]만큼) hashMap 저장
+        //3.갯수가 2 이상인 것들 중에 가장 많이 저장된 것들(같으면 모두출력) 출력
+
+        for(int i = 0; i<course.length; i++) {
+            int max = -1;
+            int cnt = 0;
+            for(int j = 0; j<orders.length; j++) {
+                String[] st;
+                st = orders[j].split("");
+                Arrays.sort(st); //알파벳 오름차순으로 변경
+                boolean[] visit = new boolean[st.length];
+                combination(st, visit, 0, st.length, course[i]);
+            }
+            //map에서 value가 가장 높은 key를 ans에 저장. value가 같으면 모두 저장.(알파벳 오름차순)
+            //저장 후 map은 다시 clear
+
+            //map을 value 기준으로 내림차순 정렬
+            List<Map.Entry<String, Integer>> list_entries = new ArrayList<Map.Entry<String, Integer>>(map.entrySet());
+            Collections.sort(list_entries, new Comparator<Map.Entry<String, Integer>>() {
+                public int compare(Map.Entry<String, Integer> obj1, Map.Entry<String, Integer> obj2) {
+                    return obj2.getValue().compareTo(obj1.getValue());
+                }
+            });
+
+            for(Map.Entry<String, Integer> entry : list_entries) {
+                if(entry.getValue() < 2)
+                    break;
+
+                if(cnt == 0)
+                    max = entry.getValue();
+
+                if(max == entry.getValue()) {
+                    list.add(entry.getKey());
+                    cnt++;
+                }
+                else
+                    break;
+            }
+            map.clear();
+        }
+
+        answer = list.toArray(new String[list.size()]);
+        Arrays.sort(answer); //정답도 오름차순으로 출력
+        return answer;
+    }
+
+    static void combination(String[] arr, boolean[] visit, int start, int n, int r) {
+        if(r == 0) {
+            save(arr, visit, n);
+            return;
+        }
+
+        for(int i = start; i<n; i++) {
+            visit[i] = true;
+            combination(arr, visit, i+1, n, r-1);
+            visit[i] = false;
+        }
+    }
+
+    static void save(String[] arr, boolean[] visit, int n) {
+        String word = "";
+        for(int i = 0; i<n; i++) {
+            if(visit[i]) {
+                word += arr[i];
+            }
+        }
+
+        if(map.containsKey(word)) { //이미 존재하는 단어면 value를 1 증가
+            map.put(word, map.get(word)+1);
+        }
+        else { //처음보는 단어면 value를 1로 저장
+             map.put(word, 1);
+        }
+    }
+}
