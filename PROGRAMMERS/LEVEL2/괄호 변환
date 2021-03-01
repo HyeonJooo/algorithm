@@ -1,0 +1,95 @@
+import java.io.*;
+import java.util.*;
+
+public class Main {
+
+    public static void main(String args[]) throws IOException {
+        Scanner sc = new Scanner(System.in);
+        String p = "()))((()";
+        String ans = solution(p);
+        System.out.println(ans);
+    }
+
+    public static String solution(String p) {
+        String answer = recursive(p);
+        return answer;
+    }
+
+    public static String recursive(String w) {
+        if(w.equals(""))
+            return ""; // 1.빈 문자열이면 빈 문자열 반환
+
+        String[] st;
+        st = w.split("");
+        int num1 = 0, num2 = 0;
+        String u = "";
+        String v = "";
+
+        // 2. w를 u/v로 분리
+        for(int i = 0 ; i<st.length; i++) {
+            if(st[i].equals("("))
+                num1++;
+            else
+                num2++;
+
+            u += st[i];
+            if(num1 == num2)
+                break;
+        }
+        for(int i = num1+num2; i<st.length; i++) {
+            v += st[i];
+        }
+
+        boolean isCorrect = check(u);
+        // 3. u가 올바른 문자열이면 v를 1단계부터 다시 수행
+        String temp = "("; //4-1. 빈 문자열에 (를 붙인다
+        if(isCorrect) {
+            return u + recursive(v);
+        }
+
+        //4. 올바른 문자열이 아니면
+        else {
+            temp += recursive(v); //4-2. 문자열 v에 대해 1단계부터 다시 실행한 문자열 붙인다
+            temp += ")"; //4-3. )를 붙인다.
+
+            String[] tempU;
+            tempU = u.split("");
+            String newU = "";
+            for(int i = 1; i<tempU.length-1; i++) {
+                if(tempU[i].equals("("))
+                    newU += ")";
+                else
+                    newU += "(";
+            }
+            temp += newU; // 4-4. u의 첫 번째와 마지막 제거하고 (와 )를 바꿔서 붙인다.
+        }
+        return temp;
+    }
+
+    public static boolean check(String s) {
+        Stack<String> stack = new Stack<>();
+        String[] st;
+        st = s.split("");
+        int cnt = 0;
+
+        for(int i = 0; i<st.length; i++) {
+            if(st[i].equals("(")) {
+                stack.push(st[i]);
+                cnt++;
+            }
+
+            else {
+                if(stack.isEmpty())
+                    continue;
+
+                stack.pop();
+                cnt++;
+            }
+        }
+
+        if(stack.isEmpty() && cnt==st.length)
+            return true;
+
+        return false;
+    }
+}
