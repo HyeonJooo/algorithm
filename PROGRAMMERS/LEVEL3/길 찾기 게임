@@ -1,0 +1,95 @@
+import java.io.*;
+import java.util.*;
+
+public class Main {
+    public static int idx = 0;
+    public static void main(String[] args) throws IOException {
+        Scanner sc = new Scanner(System.in);
+        int[][] arr = {{5,3}, {11,5}, {13,3}, {3,5}, {6,1}, {1,3}, {8,6}, {7,2}, {2,2}};
+        int[][] ans = solution(arr);
+
+        for(int i = 0 ; i<ans.length; i++) {
+            for(int j = 0; j<ans[0].length; j++) {
+                System.out.print(ans[i][j] + " ");
+            }
+            System.out.println();
+        }
+
+    }
+
+    public static int[][] solution(int[][] nodeinfo) {
+        HashMap<Integer, List<Integer>> tree = new HashMap<>();
+        ArrayList<Node> nodeArr = new ArrayList<>();
+
+        for(int i = 0; i< nodeinfo.length; i++) {
+            nodeArr.add(new Node(i+1, nodeinfo[i][0], nodeinfo[i][1]));
+        }
+        Collections.sort(nodeArr);
+        Node root = nodeArr.get(0);
+
+        for(int i = 1; i<nodeinfo.length; i++) {
+            Node ch = nodeArr.get(i);
+            connect(root, ch);
+        }
+
+        int[][] answer = new int[2][nodeArr.size()];
+        preorder(answer, root);
+        idx = 0;
+        postorder(answer, root);
+        return answer;
+    }
+
+    public static void connect(Node parent, Node child) {
+        if(parent.x > child.x) {
+            if(parent.left == null)
+                parent.left = child;
+            else
+                connect(parent.left, child);
+        }
+
+        else {
+            if(parent.right == null)
+                parent.right = child;
+            else
+                connect(parent.right, child);
+        }
+    }
+
+    static void preorder(int[][] arr, Node node) {
+        if(node != null) {
+            arr[0][idx++] = node.idx;
+
+            if(node.left != null)
+                preorder(arr, node.left);
+            if(node.right != null)
+                preorder(arr, node.right);
+        }
+    }
+
+    static void postorder(int[][] arr, Node node) {
+        if(node != null) {
+            if(node.left != null)
+                postorder(arr, node.left);
+            if(node.right != null)
+                postorder(arr, node.right);
+            arr[1][idx++] = node.idx;
+        }
+    }
+
+    static class Node implements Comparable<Node> {
+        int idx;
+        int x;
+        int y;
+        Node left;
+        Node right;
+        public Node(int idx, int x, int y) {
+            this.idx = idx;
+            this.x = x;
+            this.y = y;
+        }
+        @Override
+        public int compareTo(Node n) {
+            return n.y - this.y;
+        }
+    }
+}
