@@ -1,3 +1,66 @@
+import java.io.*;
+import java.util.*;
+
+public class Main {
+
+    public static void main(String[] args) throws IOException {
+        Scanner sc = new Scanner(System.in);
+        int[] a = {-16,27,65,-2,58,-92,-71,-68,-61,-33};
+        System.out.println(solution(a));
+    }
+
+    static int[] mintree;
+    public static int solution(int[] a) {
+        if(a.length < 3)
+            return a.length;
+
+        int answer = 0;
+        List<Integer> arr = new ArrayList<>();
+        arr.add(0);
+
+        for(int i = 0 ; i<a.length; i++) {
+            arr.add(i+1, a[i]);
+        }
+        mintree = new int[a.length*4];
+        init_min(1,a.length,1,arr);
+
+        for(int i = 2; i<a.length; i++) {
+            int leftMin = min_num(1, a.length, 1, 1, i-1);
+            int rightMin = min_num(1, a.length, 1, i+1, a.length+1);
+//            System.out.println(leftMin + " " + rightMin);
+            if(leftMin<a[i-1] && rightMin<a[i-1])
+                continue;
+            else
+                answer++;
+        }
+
+        return answer + 2;
+    }
+
+    static int init_min(int start, int end, int node, List<Integer> space) {
+        if(start == end)
+            return mintree[node] = space.get(start);
+
+        int mid = (start + end) / 2;
+
+        return mintree[node] = Math.min(init_min(start, mid, node*2, space),
+                init_min(mid+1, end, node*2+1, space));
+    }
+
+    static int min_num(int start, int end, int node, int left, int right) {
+        if(start > right || end < left)
+            return Integer.MAX_VALUE;
+
+        if(left <= start && end <= right)
+            return mintree[node];
+
+        int mid = (start + end) / 2;
+
+        return Math.min(min_num(start, mid, node*2, left, right),
+                min_num(mid+1, end, node*2+1, left, right));
+    }
+}
+
 
 //아래 코드는 시간초과.
 
